@@ -29,7 +29,7 @@ class SimpleDatabase:
         self.conn.commit()
 
     def add_habit(self, name: str, periodicity: str):
-        """Saves a new habit and returns its new ID."""
+        """Saves a new habit and returns its new ID"""
         cursor = self.conn.cursor()
         cursor.execute("INSERT INTO habits (name, periodicity) VALUES (?, ?)", (name, periodicity))
         self.conn.commit()
@@ -42,7 +42,7 @@ class SimpleDatabase:
         self.conn.commit()
 
     def get_all_habits(self):
-        """Returns all habits as a simple list of tuples."""
+        """Returns all habits as a simple list of tuples"""
         cursor = self.conn.cursor()
         cursor.execute("SELECT id, name, periodicity FROM habits")
         return cursor.fetchall()
@@ -55,7 +55,7 @@ class SimpleDatabase:
         return [row[0] for row in cursor.fetchall()]
     
     def delete_habit(self, habit_id: int):
-        """Deletes a habit and all its check-offs from the database."""
+        """Deletes a habit and all its check-offs from the database"""
         cursor = self.conn.cursor()
         
         # 1. Delete all check-offs associated with this habit
