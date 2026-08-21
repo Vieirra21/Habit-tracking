@@ -3,11 +3,11 @@ from Database import SimpleDatabase
 
 class HabitTracker:
     def __init__(self):
-        # Initialize our simplified database
+        # Initialize our simple database
         self.db = SimpleDatabase()
 
     def create_new_habit(self, name: str, periodicity: str):
-        """Creates a habit directly in the database."""
+        """Creates a habit directly in the database"""
         habit_id = self.db.add_habit(name, periodicity.lower())
         print(f"Created habit: {name} (ID: {habit_id})")
         return habit_id
@@ -22,7 +22,7 @@ class HabitTracker:
         print(f"Checked off habit ID {habit_id} on {date_string}")
 
     def delete_habit(self, habit_id: int):
-        """Deletes a habit from the database."""
+        """Deletes a habit from the database"""
         self.db.delete_habit(habit_id)
         print(f"Habit ID {habit_id} has been successfully deleted.")
 
@@ -33,7 +33,6 @@ class HabitTracker:
         all_habits = self.db.get_all_habits()
         daily_habits = []
         
-        # A simple, readable loop
         for habit in all_habits:
             habit_id, name, periodicity = habit
             if periodicity == "daily":
@@ -42,7 +41,7 @@ class HabitTracker:
         return daily_habits
 
     def calculate_streak(self, habit_id: int):
-        """Calculates the longest streak for a specific habit."""
+        """Calculates the longest streak for a specific habit"""
         dates = self.db.get_dates_for_habit(habit_id)
         
         if len(dates) == 0:
@@ -60,12 +59,10 @@ class HabitTracker:
             days_apart = (date_objects[i] - date_objects[i-1]).days
             
             if days_apart == 1:
-                # They are consecutive! Increase the streak.
                 current_streak += 1
                 if current_streak > longest_streak:
                     longest_streak = current_streak
             elif days_apart > 1:
-                # Missed a day, streak broken. Reset to 1.
                 current_streak = 1
                 
         return longest_streak
@@ -91,7 +88,7 @@ class HabitTracker:
             return "No habits exist."
 
         struggled_habit_name = ""
-        fewest_checkoffs = 9999 # Start with an artificially high number
+        fewest_checkoffs = 9999 
         
         for habit in all_habits:
             habit_id, name, periodicity = habit
@@ -109,18 +106,6 @@ class HabitTracker:
 if __name__ == "__main__":
     tracker = HabitTracker()
     
-    # 1. Create some habits (Comment these out after running it the first time!)
-    # workout_id = tracker.create_new_habit("Workout", "daily")
-    # water_id = tracker.create_new_habit("Drink Water", "daily")
-    
-    # 2. Simulate checking them off over a few days
-    # tracker.complete_habit(workout_id, "2026-08-15")
-    # tracker.complete_habit(workout_id, "2026-08-16")
-    # tracker.complete_habit(workout_id, "2026-08-17") # 3-day streak!
-    
-    # tracker.complete_habit(water_id, "2026-08-15") # Only did this once (struggled)
-
-    # 3. Print the Analytics
     print("\n--- Analytics Results ---")
     print("Daily Habits:", tracker.get_daily_habits())
     print("Longest Streak Overall:", tracker.get_longest_streak_overall(), "days")
